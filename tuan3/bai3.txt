@@ -1,0 +1,30 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+bool check(char c1, char c2){ // kiểm tra xem hai ký tự c1 và c2 có tạo 
+thành một cặp ngoặc hợp lệ hay không
+if( c1 == '(' && c2 == ')' ) return true; // nếu hợp lệ thì trả về true
+if( c1 == '[' && c2 == ']' ) return true; // nếu hợp lệ thì trả về true
+if( c1 == '{' && c2 == '}' ) return true; // nếu hợp lệ thì trả về true
+return false; // nếu không thì trả về false
+}
+int main()
+{
+stack<char> s; //tạo ngăn xếp để lưu trữ các ký tự ngoặc
+char c; //khai báo biến c để lưu trữ ký tự ngoặc từ người dùng
+while( (c = getchar()) != '\n' && c != EOF ){ //vòng lặp while đọc 
+các ký tự đến khi gặp kí tự xuống dòng \n hoặc gặp EOF
+if(s.empty()) s.push(c); // kiểm tra nếu s rỗng thì đẩy c vào 
+ngăn xếp
+else{
+if(check(s.top(), c)) s.pop(); // kiểm tra xem có tạo thành 
+cặp ngoặc hợp lệ không
+else{
+s.push(c);
+}
+}
+}
+if(s.empty()) cout << "1"; // in ra 1 cho các chuỗi cặp hợp lệ
+else cout << "0"; // in ra 0 cho các chuỗi cặp không hợp lệ
+}

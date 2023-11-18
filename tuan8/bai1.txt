@@ -1,0 +1,65 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+int convert_Int(string s){ // Hàm chuyển đổi chuỗi số sang số nguyên
+    int i = 0, d = 1;
+    for(int j = s.size() - 1; j > 0; j--){
+        i += (s[j] - 48) * d;
+        d *= 10;
+    }
+    return i;
+}
+int main()
+{
+    // Khởi tạo ma trận m và các vector
+    vector<vector<int>> m(20000, vector<int>(100, 0));
+    vector<int> mP(20000, 0);
+    vector<int> cE(20000, 0);
+    vector<int> beg(100000, 0);
+    vector<int> en(100000, 0);
+    int total_Sub = 0, num_Error = 0;
+    string uID, pID, tP, sT;
+    int point;
+    cin >> uID; // Nhập ID người dùng đầu tiên
+    while(uID != "#"){ // Đọc dữ liệu đầu vào và xử lý
+        total_Sub += 1;
+        cin >> pID >> tP >> sT >> point;
+        // Tính thời điểm bắt đầu và kết thúc của mỗi khoảng thời gian
+        beg[(tP[0] * 10 + tP[1]) * 3600 + (tP[3] * 10 + tP[4]) * 60 + tP[6] * 10 + tP[7] - 1933008] += 1;
+        int i = convert_Int(uID), j = convert_Int(pID);
+
+        if(m[i][j] < point){ // Cập nhật điểm cao nhất cho bài nộp của mỗi sinh viên
+            mP[i] += point - m[i][j];
+            m[i][j] = point;
+        }
+        if(sT == "ERR"){ // Đếm số lượng bài nộp có lỗi
+            cE[i] += 1;
+            num_Error += 1;
+        }
+        cin >> uID; // Đọc ID người dùng tiếp theo
+    }
+    for(int i = 1; i < 86401; i++){ // Tính tổng số bài nộp trong mỗi khoảng thời gian
+        beg[i] += beg[i - 1];
+        en[i] = total_Sub - beg[i];
+    }
+    // Đọc ID người dùng cho truy vấn và xuất kết quả
+    cin >> uID;
+    while(uID != "#"){
+        if(uID == "?number_submission_period"){
+            cin >> uID >> pID;
+            cout << total_Sub - beg[(uID[0] * 10 + uID[1]) * 3600 + (uID[3] * 10 + uID[4]) * 60 + uID[6] * 10 + uID[7] - 1933009] - en[(pID[0] * 10 + pID[1]) * 3600 + (pID[3] * 10 + pID[4]) * 60 + pID[6] * 10 + pID[7] - 1933008] << "\n";
+        }else if(uID == "?total_point_of_user"){
+            cin >> uID;
+            cout << mP[convert_Int(uID)] << "\n";
+        }else if(uID == "?number_error_submision_of_user"){
+            cin >> uID;
+            cout << cE[convert_Int(uID)] << "\n";
+        }else if(uID == "?number_error_submision"){
+            cout << num_Error << "\n";
+        }else{
+            cout << total_Sub << "\n";
+        }
+        cin >> uID; // Đọc ID người dùng tiếp theo
+    }
+}

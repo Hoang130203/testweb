@@ -1,0 +1,41 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+unordered_set<string> sS; // Khai báo một bộ không thứ tự
+(unordered set) chứa chuỗi (string), để lưu trữ các chuỗi mà chương trình 
+đã gặp trước đó
+string s; // Khai báo một biến chuỗi s để đọc dữ liệu từ đầu vào
+cin >> s;
+while(s != "*"){ // Lặp cho đến khi giá trị đọc từ đầu vào không phải 
+là "*"
+sS.insert(s); // Thêm chuỗi s vào bộ không thứ tự sS
+cin >> s;
+}
+cin >> s;
+while(s != "***"){ // Lặp cho đến khi giá trị đọc từ đầu vào không 
+phải là "***"
+if(s == "find"){
+cin >> s;
+if(sS.count(s) == 0){ // Kiểm tra xem chuỗi s có tồn tại 
+trong bộ sS hay không
+cout << 0 << '\n';; // Nếu không tồn tại, in ra màn 
+hình số 0
+}else cout << 1 << '\n';; // Nếu chuỗi s tồn tại trong bộ
+sS, in ra màn hình số 1
+}else{
+cin >> s;
+if(sS.count(s) == 0){ // Kiểm tra xem chuỗi s có tồn tại 
+trong bộ sS hay không
+sS.insert(s); // Nếu không tồn tại, thêm chuỗi s vào 
+bộ sS
+cout << 1 << '\n'; // In ra màn hình số 1
+}else{
+cout << 0 << '\n'; // Nếu chuỗi s đã tồn tại trong bộ
+sS, in ra màn hình số 0
+}
+}
+cin >> s;
+}
+}

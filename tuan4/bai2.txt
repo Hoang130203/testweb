@@ -1,0 +1,33 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+int n, m; // Khai báo hai biến nguyên n và m
+char ss[201]; // Khai báo một chuỗi ss có kích thước tối đa 201 ký 
+tự
+scanf("%d%d", &n, &m);
+vector<int> vv(200); // Khai báo một vector vv có 200 phần tử kiểu 
+nguyên
+vv[0] = 1; // Gán giá trị đầu tiên của vector là 1
+for (int i = 1; i <= 199; i++)
+{
+vv[i] = (vv[i - 1] * 256) % m; // Tính giá trị của phần tử vv[i] 
+dựa trên phần tử trước đó và số 256, sau đó lấy modulo m
+}
+fflush(stdin); // Xóa bộ đệm đầu vào stdin để chuẩn bị cho việc đọc 
+chuỗi tiếp theo
+while(n--){
+scanf("%s", ss);
+string s = ss; // Chuyển mảng ký tự ss thành một chuỗi string s
+int k = s.size() - 1; // Lấy độ dài của chuỗi s và giảm đi 1 để 
+tính chỉ số của ký tự cuối cùng
+int mdl = 0;
+for(int j = 0; j <= k; j++){
+mdl = (mdl + s[k - j] * vv[j]) % m; // Cộng dồn giá trị 
+modulo bằng cách nhân ký tự của chuỗi với vv[j] và lấy modulo m
+}
+printf("%d\n", mdl); // In giá trị modulo mdl ra màn hình, sau 
+đó xuống dòng
+}
+}

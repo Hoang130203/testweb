@@ -1,0 +1,48 @@
+//Vu Minh Hoang - 20215386
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 1e4 + 3;
+int n, a[N], Min86, Max86, Sum86;
+string s_86;
+int convert(string x){
+ int res = 0, pow = 1;
+ for(int i = x.length() - 1; i >= 0; i--){
+ res += pow * (x[i] - '0');
+ pow *= 10;
+ }
+ return res;
+}
+void solve(){
+ if(s_86[0] == '*') return;
+ int x, y;
+ cin >> x >> y;
+ int res = -10005;
+ for(int i = x; i <= y; i++)
+ res = max(res, a[i]);
+ cout << res << '\n';
+}
+int main(){
+ cin >> n;
+ Min86 = 10005;
+ Max86 = -10005;
+ for(int i = 1; i <= n; i++){
+ cin >> a[i];
+ Min86 = min(Min86, a[i]);
+ Max86 = max(Max86, a[i]);
+ Sum86 += a[i];
+ }
+ char k86;
+ cin >> k86;
+ while(cin >> s_86){
+ //cout << s_86 << '\n';
+ if(s_86 == "find-max")
+ cout << Max86 << '\n';
+ else
+ if(s_86 == "find-min")
+ cout << Min86 << '\n';
+ else
+ if(s_86 == "sum")
+ cout << Sum86 << '\n';
+ else solve();
+ }
+}

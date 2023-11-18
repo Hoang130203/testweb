@@ -1,0 +1,24 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+const int mod=1000000007; //khai báo hằng số mod
+int c[1000][1000]; //khai báo mảng 2 chiều
+void ckn(){ //tính toán giá trị của hệ số nhị thức C(k,n)
+for(int n=0;n<1000;n++){ //vòng lặp biến n
+for(int k=0;k<=n;k++){ //vòng lặp biến k
+if(k==n || k==0){ //kiểm tra điều kiện xem k có bằng n hoặc k có 
+bằng 0 hay không ?
+c[k][n]=1; //nếu bằng thì được gán giá trị 1
+}
+else{
+c[k][n]=(c[k-1][n-1]+c[k][n-1])%mod; //nếu 
+không bằng thì áp dụng công thức tính tổ hợp rồi chia lấy dư với mod
+}
+}
+}
+}
+int main(){
+int k86, n86; cin>>k86>>n86; //khai báo và nhập
+ckn();
+cout<<c[k86][n86]; //xuất
+}

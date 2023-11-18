@@ -1,0 +1,39 @@
+//CPP
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+//kiểm tra xem một chuỗi đầu vào s_86 có đại diện cho một ngày hợp lệ
+không
+bool isValidDate(string s_86, int& year86, int& month86, int& day86) {
+ if (s_86.size() != 10 || s_86[4] != '-' || s_86[7] != '-') {
+ return false;
+ }
+ try {
+ year86 = stoi(s_86.substr(0, 4)); // trích xuất 4 ký tự đầu tiên từ chuỗi 
+s_86 bắt đầu từ vị trí 0
+ month86 = stoi(s_86.substr(5, 2)); //trích xuất 2 ký tự tiếp theo từ vị
+trí thứ 5 của chuỗi s_86
+ day86 = stoi(s_86.substr(8, 2)); // trích xuất 2 ký tự cuối cùng của 
+chuỗi s_86
+ if (month86 < 1 || month86 > 12 || day86 < 1 || day86 > 31) {
+ return false;
+ }
+ }
+ catch (...) { //xử lý ngoại lệ không thuộc các loại trên
+ return false;
+ }
+ return true;
+}
+int main() {
+ string s_86; //Khai báo một biến chuỗi s_86
+ cin >> s_86; // nhập
+ int year86, month86, day86;
+//kiểm tra chuỗi s_86 có hợp lệ không
+ if (isValidDate(s_86, year86, month86, day86)) {
+ cout << year86 << " " << month86 << " " << day86 << endl;
+ }
+ else {
+ cout << "INCORRECT" << endl;
+ }
+ return 0;
+}

@@ -1,0 +1,170 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+typedef struct List
+{
+ int val;
+ List* listNext;
+} List;
+List* startt = new List;
+List* endd = new List;
+void reVerse(){
+ List* d = nullptr;
+ List* e = startt;
+ List* f = startt -> listNext;
+ while(f != NULL){
+ e -> listNext = d;
+ d = e;
+ e = f;
+ f = f -> listNext;
+ }
+ e -> listNext = d;
+ endd = startt;
+ startt = e;
+}
+void addFirst(int i){
+ List* n = new List;
+ n -> val = i;
+ n -> listNext = startt;
+ startt = n;
+}
+void reMove(int i, List* s){
+ if(s -> val == i){
+ startt = startt -> listNext;
+ return;
+ }
+ while(s -> listNext != NULL && s -> listNext -> val != i){
+ s = s -> listNext;
+ }
+ if(s -> listNext -> listNext == NULL){
+ s -> listNext = nullptr;
+ endd = s;
+ return;
+ }
+ s -> listNext = s -> listNext -> listNext;
+}
+void addLast(int i){
+ List* n = new List;
+ n -> val = i;
+ n -> listNext = nullptr;
+ endd -> listNext = n;
+ endd = n;
+}
+void addAfter(int i, int j, List* s){
+ while(s != NULL && s -> val != i){
+ s = s -> listNext;
+ }
+ List* n = new List;
+ n -> val = j;
+ n -> listNext = s -> listNext;
+ s -> listNext = n;
+}
+void addBefore(int i, int j, List* s){
+ if(s -> val == i){
+ addFirst(i);
+ return;
+ }
+ while(s -> listNext != NULL && s -> listNext -> val != i){
+ s = s -> listNext;
+ }
+ List* n = new List;
+ n -> val = j;
+ n -> listNext = s -> listNext;
+ s -> listNext = n;
+}
+void printList(List * s){
+ while(s != NULL){
+ cout << s -> val << " ";
+ s = s -> listNext;
+ }
+}
+int convertToInt(string s){
+int d = 1, i = 0;
+for(int j = s.size() - 1; j >= 0; j--){
+i += d * (s[j] - 48);
+d *= 10;
+}
+return i;
+}
+int main()
+{
+ int n;
+ unordered_set<int> setV;
+ cin >> n;
+ int j;
+ cin >> j;
+ setV.insert(j);
+ startt -> val = j;
+ startt -> listNext = nullptr;
+ endd = startt;
+ for(int i = 2; i <= n; i++){
+ cin >> j;
+ setV.insert(j);
+ addLast(j);
+ }
+ char ch;
+ while((ch = getchar()) != '\n' && ch != EOF);
+ string s;
+ getline(cin, s);
+ while(s.compare("#") != 0){
+ if(int d = s.find("addlast") != -1){
+ int i = convertToInt(s.substr(8, s.size() - 8));
+ if(setV.count(i) == 0){
+ addLast(i);
+ setV.insert(i);
+ }
+ }
+ if(int d = s.find("addfirst") != -1){
+ int i = convertToInt(s.substr(9, s.size() - 9));
+ if(setV.count(i) == 0){
+ addFirst(i);
+ setV.insert(i);
+ }
+ }
+ if(int d = s.find("addafter") != -1){
+ int i = s.find(" ");
+ int ii = s.find(" ", i + 1);
+ i = convertToInt(s.substr(i + 1, ii - i - 1));
+ if(setV.count(i) != 0){
+ getline(cin, s);
+ continue;
+ }
+ ii = convertToInt(s.substr(ii + 1, s.size() - ii - 1));
+ if(setV.count(ii) == 0){
+ getline(cin, s);
+ continue;
+ }
+ addAfter(ii, i, startt);
+ setV.insert(i);
+ }
+ if(int d = s.find("addbefore") != -1){
+ int i = s.find(" ");
+ int ii = s.find(" ", i + 1);
+ i = convertToInt(s.substr(i + 1, ii - i - 1));
+ if(setV.count(i) != 0) {
+ getline(cin, s);
+ continue;
+ }
+ ii = convertToInt(s.substr(ii + 1, s.size() - ii - 1));
+ if(setV.count(ii) == 0) {
+ getline(cin, s);
+ continue;
+ }
+ addBefore(ii, i, startt);
+ setV.insert(i);
+ }
+ if(int d = s.find("remove") != -1){
+ int i = convertToInt(s.substr(7, s.size() - 7));
+ if(setV.count(i) != 0){
+ reMove(i, startt);
+ setV.erase(i);
+ }
+ }
+ if(int d = s.find("reverse") != -1){
+ reVerse();
+ }
+ getline(cin, s);
+ }
+ printList(startt);
+}

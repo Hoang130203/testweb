@@ -1,0 +1,24 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+unordered_map<int, int> v; // Khai báo một bản đồ không thứ tự 
+(unordered map) v, trong đó các cặp key-value có kiểu dữ liệu int-int
+int n86, m86, ka, d = 0;
+cin >> n86 >> m86;
+for(int i = 1; i <= n86; i++){ // Vòng lặp for từ 1 đến n86 để đọc và 
+xử lý mỗi giá trị ka
+cin >> ka; // Đọc giá trị nguyên ka từ đầu vào
+if(v.count(ka) == 0){ // Kiểm tra xem giá trị ka đã tồn tại trong 
+bản đồ v hay chưa
+v.insert(make_pair(m86 - ka, ka)); // Nếu không tồn tại, 
+thêm cặp (m86 - ka, ka) vào bản đồ v
+}else{
+d++; // Nếu giá trị ka đã tồn tại trong bản đồ v, tăng biến 
+d lên 1 để đếm số lần trùng lặp
+}
+}
+cout << d; // In ra màn hình giá trị của biến d, đại diện cho số lần 
+trùng lặp giữa giá trị ka và (m86 - ka)
+}

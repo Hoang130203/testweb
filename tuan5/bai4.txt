@@ -1,0 +1,44 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int ct;
+void checkHC(vector<int> &hC, vector<set<int>> &v, vector<bool> 
+&checkN, int n){ // hàm đệ quy để kiểm tra đường đi Hamilton từ một 
+đỉnh đã được chọn
+ if(hC.size() == n){ // hC là vector lưu trữ đường đi Hamilton tạm thời
+ if(v[hC[n - 1]].count(1) != 0) ct = 1;
+ return;
+ }
+ if(ct == 1) return;
+ int d = hC.back();
+ for(auto x : v[d]){
+ if(checkN[x]){
+ checkN[x] = false;
+ hC.push_back(x);
+ checkHC(hC, v, checkN, n);
+ checkN[x] = true;
+ hC.pop_back();
+ }
+ }
+}
+int main(){
+ int n86, m86, d, e, T;
+ scanf("%d", &T); // Nhập số lượng bộ test
+ while (T--) {
+ ct = 0;
+ scanf("%d %d", &n86, &m86); // Nhập số nút và số cạnh
+ vector<set<int>> v(n86 + 1); // Khởi tạo danh sách kề
+ vector<bool> checkN(n86 + 1, true); // Mảng đánh dấu các đỉnh
+ while (m86--) {
+ scanf("%d %d", &d, &e);
+ v[d].insert(e);
+ v[e].insert(d);
+ }
+ vector<int> hC;
+ hC.push_back(1); // Bắt đầu từ đỉnh 1
+ checkN[1] = false; // Đánh dấu đỉnh 1 đã được đi qua
+ checkHC(hC, v, checkN, n86); // Kiểm tra đường đi Hamilton từ đỉnh 
+1
+ printf("%d\n", ct); // In kết quả
+ }
+}

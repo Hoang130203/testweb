@@ -1,0 +1,35 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+void DFS(vector<set<int>> &v, vector<bool> &checkN, stack<int> &s) 
+{ // hàm thực hiện duyệt đồ thị theo chiều sâu
+ while (!s.empty()) {
+ int d = s.top();
+ printf("%d ", d); // In ra nút hiện tại
+ s.pop(); // Xóa nút hiện tại khỏi stack
+ // Duyệt qua các nút kề với nút hiện tại
+ for (auto x : v[d]) {
+ if (checkN[x]) {
+ checkN[x] = false; // Đánh dấu nút đã duyệt qua
+ s.push(x); // Thêm nút vào stack
+ DFS(v, checkN, s); // Gọi đệ quy DFS với nút kề x
+ }
+ }
+ }
+}
+int main() {
+ int n86, m86, d, e;
+ scanf("%d %d", &n86, &m86); // Nhập số nút và số cạnh
+ vector<set<int>> v(n86 + 1); // Khởi tạo danh sách kề
+ vector<bool> checkN(n86, true); // Mảng đánh dấu các nút
+ // Nhập thông tin về các cạnh
+ for (int i = 0; i < m86; i++) {
+ scanf("%d %d", &d, &e);
+ v[d].insert(e); // Thêm cạnh (d, e)
+ v[e].insert(d); // Thêm cạnh (e, d) - đồ thị vô hướng
+ }
+ stack<int> s;
+ s.push(1); // Bắt đầu từ nút 1
+ checkN[1] = false; // Đánh dấu nút 1 đã được duyệt
+ DFS(v, checkN, s); // Gọi hàm DFS để bắt đầu duyệt đồ thị từ nút 1
+}

@@ -1,0 +1,58 @@
+//CPP
+//Vu Minh Hoang
+#include <bits/stdc++.h>
+using namespace std;
+//hàm tính tổng tiền phải trả trước khi thay đổi cách tính tiền với tham số
+đầu vào n86 là số điện đã dùng
+float GiaDienCu(int n86)
+{
+ if (n86 >= 0 && n86 <= 50) { // su dung vong lap if voi moi so dien thi 
+tinh ra so tien phai tra sau khi doi cach tinh
+ return n86 * 1728;
+ }
+ else if (n86 >= 51 && n86 <= 100) {
+ return 50 * 1728 + (n86-50)*1786;
+ }
+ else if (n86 >= 101 && n86 <= 200) {
+ return 50 * 1728 + 50 * 1786 + (n86-100)*2074;
+ }
+ else if (n86 >= 201 && n86 <= 300) {
+ return 50 * 1728 + 50 * 1786 + 100*2074 + (n86-200)*2612;
+ }
+ else if (n86 >= 301 && n86 <= 400) {
+ return 50 * 1728 + 50 * 1786 + 100*2074 + 100*2612 + (n86-
+300)*2919;
+ }
+ else if (n86 >= 401) {
+ return 50 * 1728 + 50 * 1786 + 100 * 2074 + 100 * 2612 + 100 * 
+2919 + (n86-400)*3015;
+ }
+}
+///hàm tính tổng tiền phải trả sau khi thay đổi cách tính tiền với tham số
+đầu vào n86 là số điện đã dùng
+float GiaDienMoi(int n86)
+{
+ if (n86 >= 0 && n86 <= 100) { // su dung vong lap if voi moi so dien 
+thi tinh ra so tien phai tra sau khi doi cach tinh
+ return n86 * 1728;
+ }
+ else if (n86 >= 101 && n86 <= 200) {
+ return 100 * 1728 + (n86 - 100) * 2074;
+ }
+ else if (n86 >= 201 && n86 <= 400) {
+ return 100 * 1728 + 100 * 2074 + (n86 - 100) * 2612;
+ }
+ else if (n86 >= 401 && n86 <= 700) {
+ return 100 * 1728 + 100 * 2074 + 200 * 2612 + (n86-400)*3111;
+ }
+ else if (n86 >= 701) {
+ return 100 * 1728 + 100 * 2074 + 200 * 2612 + 300 * 3111 + (n86-
+700)*3457;
+ }
+}
+int main() {
+ int n86; //khai bao so dien da dung
+ cin >> n86; //nhap so dien da dung
+ cout << fixed << setprecision(2) <<(GiaDienMoi(n86) -
+GiaDienCu(n86))*1.1;
+}

@@ -1,0 +1,32 @@
+//Vu Minh Hoang - 20215386
+#include <iostream>
+using namespace std;
+void generateCollections(int n, int M, int current[], int idx) { // tạo tất cả
+các tập hợp có thứ tự gồm n phần tử sao cho tổng của các phần tử trong 
+tập hợp đó bằng M
+ if (n == 0) { // kiểm tra đã đủ n phần tử chưa
+ if (M == 0) {
+ for (int i = 0; i < idx; i++) {
+ cout << current[i] << " "; // nếu thỏa mãn thì in ra các phần tử
+trong ordered collection
+ }
+ cout << endl;
+ }
+ return;
+ }
+ for (int x = 1; x <= M; x++) { // thử tất cả các giá trị từ 1 đến M cho 
+phần tử tiếp theo trong ordered collection
+ if (x <= M) { // kiểm tra xem x có nhỏ hơn hoặc bằng M không
+ current[idx] = x; // gán x
+ generateCollections(n - 1, M - x, current, idx + 1);
+ }
+ }
+}
+int main() {
+ int n86, M86;
+ cin >> n86 >> M86;
+ int current[n86]; // tạo mảng để lưu trữ ordered collection
+ generateCollections(n86, M86, current, 0); // sử dụng hàm 
+generateCollections để bắt đầu quá trình tạo ordered collection
+ return 0;
+}

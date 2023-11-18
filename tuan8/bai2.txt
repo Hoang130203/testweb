@@ -1,0 +1,86 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+int convert_Int(string s){ // Hàm chuyển đổi chuỗi số sang số nguyên
+    int i = 0, d = 1;
+    for(int j = s.size() - 1; j >= 0; j--){
+        i += (s[j] - 48) * d; // Chuyển đổi ký tự số thành giá trị số nguyên và tích luỹ vào i
+        d *= 10; // Tăng giá trị của d để chuyển sang hàng đơn vị tiếp theo
+    }
+    return i;
+}
+int main()
+{
+    vector<int> mAA(100005, 0); // Số người sống của mỗi người theo ID
+    vector<int> rk(100005, 0); // Số lượng người có quan hệ gia đình theo ID
+    vector<vector<vector<int>>> bir(200, vector<vector<int>>(12, vector<int>(31, 0)));
+    int beg[150000]; // Số lượng người sống tại mỗi thời điểm
+    int total_People = 0, num_ForM_R = 0; // Biến đếm tổng số người và số lượng quan hệ gia đình
+
+    // Đọc ID người dùng đầu tiên
+    string cD, dOB, fC, mC, iA, rC;
+    cin >> cD;
+
+    while(cD != "*"){ // Đọc và xử lý dữ liệu đầu vào
+        total_People += 1; // Tăng tổng số người lên 1
+        cin >> dOB >> fC >> mC >> iA >> rC;
+        if(fC != "0000000"){
+            mAA[convert_Int(cD)] = max(mAA[convert_Int(fC)], mAA[convert_Int(mC)]) + 1;
+            rk[convert_Int(cD)] += 2; // Tăng số lượng quan hệ gia đình của người có ID cD lên 2
+            rk[convert_Int(fC)] += 1; // Tăng số lượng quan hệ gia đình của người có ID fC lên 1
+            rk[convert_Int(mC)] += 1; // Tăng số lượng quan hệ gia đình của người có ID mC lên 1
+            num_ForM_R += 2; // Tăng số lượng quan hệ gia đình lên 2
+        }
+
+        // Thống kê số lượng người sinh ra trong từng ngày
+        bir[(dOB[0] - 48) * 1000 + (dOB[1] - 48) * 100 + (dOB[2] - 48) * 10 + dOB[3] - 48 - 1900][(dOB[5] - 48) * 10 + dOB[6] - 48 - 1][(dOB[8] - 48) * 10 + dOB[9] - 48 - 1] += 1;
+
+        // Thống kê số lượng người sống tại mỗi thời điểm
+        beg[((dOB[0] - '0') * 1000 + (dOB[1] - '0') * 100 + (dOB[2] - '0') * 10 + dOB[3] - '0' - 1900) * 500 + ((dOB[5] - '0') * 10 + dOB[6] - '0') * 33 + (dOB[8] - '0') * 10 + dOB[9] - '0'] += 1;
+        cin >> cD; // Đọc ID người dùng tiếp theo
+    }
+    // Tính tổng số người sống tại mỗi thời điểm
+    for(int i = 1; i < 150000; i++){
+        beg[i] += beg[i - 1];
+    }
+    // Đọc ID người dùng cho các truy vấn
+    cin >> cD;
+    while(cD != "***"){
+        // Xử lý các truy vấn
+        if(cD == "NUMBER_PEOPLE_BORN_BETWEEN"){
+            cin >> cD >> dOB;
+            // In ra số người sinh ra trong khoảng thời gian cụ thể
+            cout << beg[((dOB[0] - '0') * 1000 + (dOB[1] - '0') * 100 + (dOB[2] - '0') * 10 + dOB[3] - '0' - 1900) * 500 + ((dOB[5] - '0') * 10 + dOB[6] - '0') * 33 + (dOB[8] - '0') * 10 + dOB[9] - '0'] - beg[((cD[0] - '0') * 1000 + (cD[1] - '0') * 100 + (cD[2] - '0') * 10 + cD[3] - '0' - 1900) * 500 + ((cD[5] - '0') * 10 + cD[6] - '0') * 33 + (cD[8] - '0') * 10 + cD[9] - '0' - 1] << "\n";
+            cin >> cD;
+        }
+        else if(cD == "MOST_ALIVE_ANCESTOR"){
+            cin >> cD;
+            // In ra số người sống nhiều nhất của một người
+            cout << mAA[convert_Int(cD)] << "\n";
+            cin >> cD;
+        }else if(cD == "NUMBER_PEOPLE_BORN_AT"){
+            cin >> dOB;
+            // In ra số người sinh ra vào một ngày cụ thể
+            cout << bir[(dOB[0] - 48) * 1000 + (dOB[1] - 48) * 100 + (dOB[2] - 48) * 10 + dOB[3] - 48 - 1900][(dOB[5] - 48) * 10 + dOB[6] - 48 - 1][(dOB[8] - 48) * 10 + dOB[9] - 48 - 1] << "\n";
+            cin >> cD;
+        }else if(cD == "NUMBER_PEOPLE"){
+            // In ra tổng số người
+            cout << total_People << "\n";
+            cin >> cD;
+        }else{
+            // Xử lý truy vấn cuối cùng
+            sort(rk.begin(), rk.end(),[](int a, int b){
+                return a > b;
+            });
+            int l = 0;
+            while(num_ForM_R > 0){
+                num_ForM_R -= rk[l];
+                l++;
+            }
+            // In ra số người còn sống sau khi loại bỏ số lượng quan hệ gia đình cao nhất
+            cout << total_People - l<< "\n";
+            cin >> cD;
+        }
+    }
+}

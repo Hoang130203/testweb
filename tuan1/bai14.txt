@@ -1,0 +1,19 @@
+//Vu Minh Hoang - 20215386
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+ string P1, P2, T;
+ getline(cin, P1); // đọc xâu P1 và lưu vào biến P1
+ getline(cin, P2); // đọc xâu P2 và lưu vào biến P2
+ getline(cin, T); // đọc xâu T và lưu vào biến T
+ size_t pos = 0; // khai báo biến
+ while ((pos = T.find(P1, pos)) != string::npos) { // sử dụng để tìm và 
+thay thế xâu P1 bằng xâu P2 trong văn bản T
+ T.replace(pos, P1.length(), P2); // thay thế xâu P1 bằng xâu P2 trong 
+văn bản T tại vị trí pos
+ pos += P2.length();
+ }
+ cout << T << endl;
+ return 0;
+}

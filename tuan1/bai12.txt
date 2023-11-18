@@ -1,0 +1,28 @@
+//Vu Minh Hoang - 20215386
+#include <iostream>
+using namespace std;
+int main() {
+ int n86, k86;
+ cin >> n86 >> k86;
+ int a[n86];
+ for (int i = 0; i < n86; i++) {
+ cin >> a[i];
+ }
+ int evenCount = 0;
+ int Sum = 0; //tong cac phan tu cua daycon
+ long long daycon = 0; //so luong day con thoa man
+ for (int i = 0; i < n86; i++) {
+ Sum += a[i];
+ if (i >= k86 - 1) { //kiem tra xem du phan tu k86 de tao 1 day con 
+chua
+ if (Sum % 2 == 0) { //kiem tra xem tong phan tu trong day con co 
+phai so chan khong
+ daycon++; // so day con tang len 1
+ }
+ Sum -= a[i - k86 + 1]; // tru di phan tu dau tien trong day con ra 
+khoi tong de tiep tuc vong lap tiep theo
+ }
+ }
+ cout << daycon << endl;
+ return 0;
+}

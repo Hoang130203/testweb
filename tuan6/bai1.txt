@@ -1,0 +1,52 @@
+//Vũ Minh Hoàng - 20215386
+// C++
+#include <bits/stdc++.h>
+using namespace std;
+int n, m, s, t, c, d;
+// Hàm tìm đường tăng cường trong đồ thị
+void fF(vector<vector<int>> v, vector<bool> cN, vector<int> &fL, int s, int t){
+ for(int i = 1; i <= n; i++){
+ if(v[s][i] != 0 && cN[i]){
+ fL.push_back(i);
+ cN[i] = false;
+ if(i == t) return;
+ fF(v, cN, fL, i, t);
+ if(fL.back() == t) return;
+ fL.pop_back();
+ cN[i] = true;
+ }
+ }
+}
+int main(){
+ int maxF = 0;
+ scanf("%d %d", &n, &m); // Nhập số đỉnh, số cạnh, đỉnh nguồn s và đỉnh đích t
+ vector<vector<int>> v(n + 1, vector<int>(n + 1, 0)); // Khởi tạo ma trận trọng số
+với giá trị ban đầu là 0
+ scanf("%d %d", &s, &t); // Nhập đỉnh nguồn (s) và đỉnh đích (t)
+ while(m--){ // Nhập trọng số cho m cạnh
+ scanf("%d %d", &c, &d);
+ scanf("%d", &v[c][d]);
+ }
+ vector<bool> cN(n + 1, true); // Tạo mảng đánh dấu các đỉnh đã thăm
+ cN[s] = false;
+ vector<int> fL(1, s); // Tạo danh sách lưu đường đi tăng cường và thêm đỉnh 
+nguồn vào danh sách
+ fF(v, cN, fL, s, t); // Tìm đường đi tăng cường và lưu vào danh sách
+ while(fL.size() != 1){ // Lặp cho đến khi không còn đường đi tăng cường
+ int maxR = INT_MAX;
+ for(int i = 0; i < fL.size() - 1; i++){ // Tìm giá trị cực tiểu trên đường đi tăng 
+cường
+ if(maxR > v[fL[i]][fL[i + 1]]) maxR = v[fL[i]][fL[i + 1]];
+ }
+ // Cập nhật luồng và cạnh residual
+ maxF += maxR;
+ for(int i = 0; i < fL.size() - 1; i++){
+ v[fL[i]][fL[i + 1]] -= maxR;
+ v[fL[i + 1]][fL[i]] = maxR;
+ }
+ // Reset đường đi tăng cường và tìm lại
+ fL.resize(1, s);
+ fF(v, cN, fL, s, t);
+ }
+ cout << maxF; // In ra giá trị luồng tối đa
+}

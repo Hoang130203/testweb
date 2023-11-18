@@ -1,0 +1,27 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int a[21]; // khai báo mảng
+int n86;
+void in(){ // in ra dãy nhị phân hiện tại
+ for(int i=1;i<=n86;i++){
+ cout<<a[i];
+ }
+ cout<<endl;
+}
+void Try(int i){ // thử bắt đầu từ i
+ for(int k=0;k<=1;k++){ // vòng lặp để thử các giá trị của i với k bằng 0 
+và 1
+ if(a[i-1]+k<=1){ // kiểm tra nếu nhỏ hơn bằng 1 thì dãy nhị phân sẽ
+không thể có 2 số 1 liên tiếp
+ a[i]=k; // gán
+ if(i==n86) // kiểm tra xem đến phần tử cuối chưa
+ in(); // nếu đến rồi thì in ra
+ else Try(i+1); // chưa đến thì tiếp tục thử
+ }
+ }
+}
+int main(){
+ cin>>n86;
+ Try(1); // bắt đầu liệt kê dãy nhị phân
+}

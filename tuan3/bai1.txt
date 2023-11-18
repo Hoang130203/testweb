@@ -1,0 +1,32 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+stack<int> s; //tạo một đối tượng kiểu stack chứa các số nguyên
+string a; //tạo một chuỗi (string) để lưu trữ dữ liệu đầu vào từ người 
+dùng
+getline(cin, a); //đọc một dòng từ người dùng và lưu vào chuỗi a
+while(a.compare("#") != 0){ //tạo vòng lặp kiểm tra xem chuỗi a mà 
+không bằng # thì tiếp tục lặp
+if(a.compare("POP") == 0){ //Kiểm tra nếu chuỗi a bằng 
+"POP" không
+if(s.empty()) cout << "NULL" << '\n'; // nếu s rỗng thì in 
+ra NULL
+else{
+cout << s.top() << '\n'; //nếu không in ra phần tử
+đầu
+s.pop();
+}
+}else{ //nếu chuỗi a không bằng "POP"
+int i = a.find(" "); //tìm vị trí dấu cách đầu tiên
+string b = a.substr(i + 1); //tạo chuỗi b từ sau dấu cách 
+đầu tiên
+i = stoi(b); //chuyển đổi b thành số nguyên và lưu vào i
+s.push(i); //đẩy i vào ngăn xếp
+}
+getline(cin, a); //tiếp tục đọc dữ liệu đầu vào từ người dùng cho 
+đến khi gặp #
+}
+}

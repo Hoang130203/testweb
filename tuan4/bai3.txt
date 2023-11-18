@@ -1,0 +1,24 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+unordered_set<int> s; // Khai báo một bộ không thứ tự (unordered 
+set) chứa các số nguyên, lưu trữ các giá trị mà chương trình đã gặp trước 
+đó
+int n86, m86;
+cin >> n86;
+for(int i = 1; i <= n86; i++){
+cin >> m86;
+if(s.count(m86) == 0) { // Kiểm tra xem số nguyên m86 đã tồn 
+tại trong bộ không thứ tự s chưa
+s.insert(m86); // Nếu chưa tồn tại, thêm m86 vào bộ s
+cout << 0 << '\n'; // In ra màn hình số 0 (cho biết số m86 
+là duy nhất) và kết thúc dòng
+}
+else{
+cout << 1 << '\n'; // Nếu m86 đã tồn tại trong bộ s, in ra 
+màn hình số 1 (cho biết số m86 đã xuất hiện trước đó) và kết thúc dòng
+}
+}
+}

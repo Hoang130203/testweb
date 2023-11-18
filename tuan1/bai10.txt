@@ -1,0 +1,22 @@
+//C/C++
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ int a86, b86, c86;
+ cin >> a86 >> b86 >> c86;
+ double discriminant = b86 * b86 - 4 * a86 * c86; // cong thuc tinh delta
+ if (discriminant < 0) {
+ cout << "NO SOLUTION" << endl;
+ }
+ else if (discriminant == 0) {
+ double x0 = -b86 / (2.0 * a86);
+ cout << fixed << setprecision(2) << x0 << endl;
+ }
+ else {
+ double x1 = (-b86 + sqrt(discriminant)) / (2.0 * a86);
+ double x2 = (-b86 - sqrt(discriminant)) / (2.0 * a86);
+ cout << fixed << setprecision(2) << x2 << " " << x1 << endl;
+ }
+ return 0;
+}

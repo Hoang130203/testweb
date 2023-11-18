@@ -1,0 +1,24 @@
+//Vu Minh Hoang
+//20215386
+#include <iostream>
+using namespace std;
+int main()
+{
+int n86;
+long s86=0;
+//nhập vào số phần tử
+cin>>n86;
+//khai báo mảng động chứa n86 phần tử
+int *mang86=new int[n86];
+//nhập từng phần tử trong mảng
+for(int i86=0;i86<n86;i86++){
+ cin>>mang86[i86];
+}
+//duyệt qua tất cả phần tử và tính tổng của chúng, lưu vào biến s86
+for(int i86=0;i86<n86;i86++){
+ s86+=mang86[i86];
+}
+//in kết quả
+cout<<s86;
+return 0;
+}

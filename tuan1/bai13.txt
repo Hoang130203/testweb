@@ -1,0 +1,11 @@
+//Vu Minh Hoang - 20215386
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+ int cnt86 = 0; // gan bien de dem so luong tu dau vao
+ string s_86;
+ while(cin >> s_86){ // su dung vong lap while de doc
+ cnt86++;
+ }
+ cout << cnt86;
+}

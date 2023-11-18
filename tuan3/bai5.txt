@@ -1,0 +1,120 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+typedef struct Tree //định nghĩa một cấu trúc dữ liệu Tree với một giá trị
+val và một danh sách các con listC
+{
+int val;
+vector<Tree*> listC;
+} Tree;
+Tree *rd = new Tree; //khai báo con trỏ rd để lưu trữ nút cây hiện tại đang 
+xem xét
+Tree *root = new Tree; //khai báo con trỏ root để lưu trữ nút gốc của cây
+void findChild(Tree* root, int value){ //hàm đệ quy để tìm nút có giá trị
+value trong cây, cập nhật con trỏ rd để trỏ đến nút cần tìm
+if(root -> val == value){
+rd = root;
+return;
+}if( (root -> listC).size() != 0 ){
+for(auto x : root -> listC){
+findChild(x, value);
+}
+}
+}
+int convertToInt(string s){ //chuyển đổi một chuỗi số sang kiểu nguyên int
+int d = 1, i = 0;
+for(int j = s.size() - 1; j >= 0; j--){
+i += d * (s[j] - 48);
+d *= 10;
+}
+return i;
+}
+void PreOrder(Tree* root){ //duyệt cây theo thứ tự và in ra các giá trị của 
+các nút
+if(root == NULL) return;
+cout << root -> val << " ";
+if((root -> listC).size() > 0){
+PreOrder((root -> listC)[0]);
+for(int i = 1; i < (root ->listC).size(); i++){
+PreOrder((root -> listC)[i]);
+}
+}
+}
+void InOrder(Tree* root){ //duyệt cây theo thứ tự và in ra các giá trị của 
+các nút
+if(root == NULL) return;
+if((root -> listC).size() > 0){
+InOrder((root -> listC)[0]);
+cout << root -> val << " ";
+for(int i = 1; i < (root ->listC).size(); i++){
+InOrder((root -> listC)[i]);
+}
+}else{
+cout << root -> val << " ";
+}
+}
+void PostOrder(Tree* root){ //duyệt cây theo thứ tự và in ra các giá trị của 
+các nút
+if(root == NULL) return;
+if((root -> listC).size() > 0){
+for(int i = 0; i < (root ->listC).size(); i++){
+PostOrder((root -> listC)[i]);
+}
+cout << root -> val << " ";
+}else{
+cout << root -> val << " ";
+}
+}
+int main()
+{
+Tree r; // tạo 1 cây rỗng r
+unordered_set<int> tValue; //sử dụng một bộ không trùng lặp để lưu 
+trữ giá trị của các nút trong cây để kiểm tra tính duy nhất của các nút
+string s; // tạo chuỗi s
+int d;
+getline(cin, s);
+while(s.compare("*") != 0){
+if( (d = s.find("MakeRoot")) != -1 ){ //tìm thấy MakeRoot thì 
+tạo nút gốc và cập nhật giá trị root
+d = s.find(" ");
+string ss = s.substr(d + 1, s.size() - d - 1);
+int i = convertToInt(ss);
+root -> val = i;
+tValue.insert(i);
+}
+if( (d = s.find("Insert")) != -1 ){ // tìm thấy Insert thì thêm một 
+nút con vào cây, kiểm tra tính hợp lệ của dữ liệu và cập nhật cây
+d = s.find(" ", 0);
+int dd = s.find(" ", d + 1);
+string ss = s.substr(dd + 1, s.size() - dd - 1);
+int i = convertToInt(ss);
+if( tValue.count(i) == 0 ) continue;
+ss = s.substr(d + 1, dd - d - 1);
+int j = convertToInt(ss);
+if( tValue.count(j) != 0) continue;
+findChild(root, i);
+Tree* a = new Tree;
+a -> val = j;
+(rd -> listC).push_back(a);
+tValue.insert(j);
+}
+if((d = s.find("InOrder")) != -1){ // tìm thấy InOrder thì thực 
+hiện duyệt cây theo thứ tự trung tố và in ra
+InOrder(root);
+cout << '\n';
+}
+if((d = s.find("PostOrder")) != -1){ // tìm thấy PostOrder thì 
+thực hiện duyệt cây theo thứ tự hậu tố và in ra
+PostOrder(root);
+cout << '\n';
+}
+if((d = s.find("PreOrder")) != -1){ // tìm thấy PreOrder thì thực 
+hiện duyệt cây theo thứ tự tiền tố và in ra
+PreOrder(root);
+cout << '\n';
+}
+getline(cin, s); // tiếp tục đọc dữ liệu người dùng đến khi gặp 
+*
+}
+}

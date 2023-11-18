@@ -1,0 +1,57 @@
+//Vũ Minh Hoàng - 20215386
+// C++
+#include <bits/stdc++.h>
+using namespace std;
+typedef struct Node{ // Định nghĩa cấu trúc Node để lưu thông tin về đỉnh và khoảng 
+cách từ đỉnh xuất phát
+ int i;
+ int d;
+} Node;
+struct cmp{ // Định nghĩa cấu trúc so sánh để sử dụng trong priority_queue
+ bool operator() (Node a, Node b) {
+ return a.d > b.d;
+ }
+};
+int main()
+{
+ int n, m, c, d, dd;
+ scanf("%d %d", &n, &m);
+ // Khởi tạo vector w và ww để lưu trọng số và đỉnh kề của các cạnh
+ vector<vector<int>> w(n + 1);
+ vector<vector<int>> ww(n + 1);
+ while (m--) // Nhập thông tin về trọng số và đỉnh kề của m cạnh
+ {
+ scanf("%d %d", &c, &d);
+ ww[c].push_back(d); // Thêm đỉnh d vào danh sách đỉnh kề của đỉnh c
+ scanf("%d", &dd);
+ w[c].push_back(dd); // Thêm trọng số dd vào danh sách trọng số của đỉnh c
+ }
+ scanf("%d %d", &c, &d); // Nhập đỉnh xuất phát và đỉnh kết thúc cho việc tìm 
+đường đi ngắn nhất
+ vector<int> s(n + 1, INT_MAX); // Khởi tạo vector s để lưu trữ khoảng cách ngắn 
+nhất từ đỉnh xuất phát đến các đỉnh khác
+ priority_queue<Node, vector<Node>, cmp> ss; // Khởi tạo priority_queue để lưu 
+trữ các đỉnh theo thứ tự ưu tiên dựa trên khoảng cách ngắn nhất
+ // Gán khoảng cách từ đỉnh xuất phát đến chính nó là 0 và thêm nó vào 
+priority_queue
+ s[c] = 0;
+ ss.push({c, 0});
+ while(!ss.empty()){ // Bắt đầu vòng lặp chính của thuật toán Dijkstra
+ Node node = ss.top(); // Lấy đỉnh có khoảng cách ngắn nhất từ priority_queue
+ ss.pop(); // Loại bỏ đỉnh vừa lấy khỏi priority_queue
+ int nD = node.i; // Lấy đỉnh nD từ đỉnh vừa lấy
+ if(s[nD] < 0) continue; // Nếu khoảng cách tới đỉnh nD đã được xác nhận là 
+ngắn nhất, bỏ qua vòng lặp và xét đỉnh tiếp theo
+ if(nD == d) break; // Nếu đã đến đỉnh kết thúc, thoát khỏi vòng lặp
+ for(int i = 0; i < ww[nD].size(); i++){ // // Duyệt qua tất cả các đỉnh kề của nD
+ if(s[ww[nD][i]] >= 0 && s[nD] + w[nD][i] < s[ww[nD][i]]){ // // Nếu đỉnh 
+ww[nD][i] chưa được xác nhận là ngắn nhất và có đường đi ngắn hơn, cập nhật 
+khoảng cách
+ s[ww[nD][i]] = s[nD] + w[nD][i];
+ ss.push({ww[nD][i], s[ww[nD][i]]});
+ }
+ }
+ s[nD] = -1; // // Đánh dấu đỉnh nD đã được xác nhận là ngắn nhất
+ }
+ printf("%d", s[d]);
+}

@@ -1,0 +1,54 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+int convertToInt(string s){ // hàm tùy chỉnh để chuyển đổi một chuỗi số
+sang kiểu nguyên
+int d = 1, i = 0;
+for(int j = s.size() - 1; j >= 0; j--){ // sử dụng vòng lặp để duyệt qua 
+chuỗi từ cuối về đầu
+i += d * (s[j] - 48); // chuyển ký tự cuối cùng của chuỗi s thành 
+số nguyên, nhân với d và cộng vào biến i
+d *= 10; // Tăng giá trị của d lên 10 lần để tính lũy thừa của 10 
+cho ký tự tiếp theo
+}
+return i;
+}
+int main()
+{
+ unordered_map<int, int> m; // cơ sở dữ liệu để lưu trữ dữ liệu cây nhị
+phân theo thuật toán cụ thể
+ string s; // khai báo chuỗi s để đọc dữ liệu từ người dùng
+ getline(cin, s); // Đọc một dòng dữ liệu từ người dùng và lưu vào biến 
+s
+ if(s.compare("#") != 0){ // kiểm tra xem chuỗi s có khác với # không
+ int i = convertToInt(s.substr(7, s.size() - 7)); // Chuyển đổi một phần 
+của chuỗi s thành một số nguyên và lưu vào biến i
+ m[1] = i;
+ getline(cin, s);
+ while(s.compare("#") != 0){
+ int i = convertToInt(s.substr(7, s.size() - 7)), d = 1;
+ while(m.count(d) != 0){
+ if(m[d] == i) break;
+ if(m[d] > i) d *= 2;
+ else d = d * 2 + 1;
+ }
+ m[d] = i;
+ getline(cin, s);
+ }
+ stack<int> s;
+ s.push(1); // đưa giá trị 1 vào ngăn xếp ban đầu để bắt đầu duyệt cây 
+nhị phân
+ while(!s.empty()){ // lặp qua tất cả nút trong cây nhị phân theo thứ
+tự duyệt theo chiều rộng và in ra giá trị của từng nút
+ int i = s.top(); // lấy giá trị trên đỉnh của ngăn xếp
+ s.pop(); // loại bỏ giá trị đỉnh khỏi ngăn xếp
+ if(m.count(i) != 0){ // kiểm tra xem giá trị i có trong bản đồ m 
+không
+ s.push(2 * i + 1);
+ s.push(2 * i);
+ cout << m[i] << " "; // in ra từng nút
+ }
+ }
+ }
+}

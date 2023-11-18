@@ -1,0 +1,33 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+bool isValidTime(string s_86, int& hh86, int& mm86, int& ss86) {
+ if (s_86.size() != 8 || s_86[2] != ':' || s_86[5] != ':') {
+ return false;
+ }
+ try {
+ hh86 = stoi(s_86.substr(0, 2));
+ mm86 = stoi(s_86.substr(3, 2));
+ ss86 = stoi(s_86.substr(6, 2));
+ if (mm86 < 0 || mm86 > 59 || ss86 < 0 || ss86 > 59 || hh86 < 0 || hh86 
+> 23) {
+ return false;
+ }
+ }
+ catch (...) {
+ return false;
+ }
+ return true;
+}
+int main() {
+ string s_86;
+ cin >> s_86;
+ int hh86, mm86, ss86;
+ if (isValidTime(s_86, hh86, mm86, ss86)) {
+ cout << hh86 * 3600 + mm86 * 60 + ss86 << endl;
+ }
+ else {
+ cout << "INCORRECT" << endl;
+ }
+ return 0;
+}

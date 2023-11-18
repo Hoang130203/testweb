@@ -1,0 +1,18 @@
+//CPP
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ int n86; //khai báo biến
+ cin >> n86;
+ int m86 = n86;
+ while (m86 < 100) { //sử dụng vòng lặp while với điều kiện biến nhỏ
+hơn 100
+ m86 += n86;
+ }
+ while (m86 <= 999) {
+ cout << m86 << " "; // xuất ra kết quả
+ m86 += n86;
+ }
+ return 0;
+}

@@ -1,0 +1,58 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int n, m; // n và m lần lượt là số nốt và số cạnh
+typedef struct Tree{ // cấu trúc Tree mô tả những cây trong rừng cây của 
+thuật toán Kruskal, val[i] chứa giá trị gốc của rừng chứa cây i
+ vector<int> val;
+ void create(int n){ // hàm tạo n rừng cây gồm 1 cây ban đầu
+ val.resize(n + 1, 0);
+ for(int i = 1; i <= n; i++) val[i] = i;
+ }
+ int findFa(int i){ // hàm tìm kiếm gốc của rừng chứa cây i
+ if(i == val[i]) return i;
+ val[i] = findFa(val[i]);
+ return val[i];
+ }
+ bool unionTree(int i, int j){ // hàm kiểm tra xem cây i với j có chung 
+rừng không, nếu không thì hợp nhất 2 rừng
+ int x = findFa(i);
+ int y = findFa(j);
+ if(x == y) return false;
+ val[x] = y;
+ return true;
+ }
+} Tree;
+typedef struct wE{ // cấu trúc wE mô tả w là trọng số giữa 2 node có giá 
+trị s và e
+ int w;
+ int s;
+ int e;
+ wE(int _s, int _e, int _w): s(_s), e(_e), w(_w) {};
+} wE;
+int main(){
+ int minS = 0, cN = 0; // minS là cây khung nhỏ nhất cần tìm, cN để đảm 
+bảo việc không phải chọn thừa những cạnh trong bước lặp của thuật toán 
+Kruskal
+ scanf("%d %d", &n, &m);
+ Tree a;
+ a.create(n);
+ vector<wE> wEL; // Vector chứa thông tin về các cạnh
+ for(int i = 1; i <= m; i++){
+ int x, y, z;
+ scanf("%d %d %d", &x, &y, &z);
+ wEL.push_back({x, y, z}); // Lưu thông tin về các cạnh
+ }
+ sort(wEL.begin(), wEL.end(), [](wE &a, wE &b){ // sắp xếp cấu trúc 
+theo trình tự cạnh có trọng số ở trước để ưu tiên duyệt trước
+ return a.w < b.w;
+ });
+ for (auto x : wEL) {
+ if (cN == n) break; // nếu đã chọn đủ n - 1 cạnh thì dừng
+ if (!(a.unionTree(x.s, x.e))) continue; // nếu 2 nút không thuộc cùng 
+rừng, hợp nhất chúng
+ minS += x.w; // cập nhật trọng số của cây khung nhỏ nhất
+ cN++; // đếm số lượng cạnh đã chọn
+ }
+ printf("%d", minS); // In ra trọng số của cây khung nhỏ nhất
+}

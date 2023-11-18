@@ -1,0 +1,13 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int fibo(int n){ //sử dụng hàm fibo(int n) là một hàm đệ quy được sử dụng 
+để tính số Fibonacci thứ n
+if(n==0) return 0; //nếu bằng 0 thì trả về 0
+if(n==1) return 1; //nếu bằng 1 thì trả về 1
+return fibo(n-1) +fibo(n-2);
+}
+int main(){
+int n86; cin>>n86; // nhập n86
+cout<<fibo(n86-1); //tính số Fibonacci thứ n86-1 và in ra kết quả
+}

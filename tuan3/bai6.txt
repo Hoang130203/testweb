@@ -1,0 +1,61 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+unordered_map<string, vector<string> > mapCP; //Khai báo một 
+unordered_map để lưu trữ quan hệ gia đình
+int desCendants(string s){ // tính số lượng hậu duệ của một người dựa trên 
+thông tin lưu trong mapCP
+ if(mapCP.count(s) == 0) return 0; // kiểm tra xem người có trong 
+mapCP không, nếu không thì trả về 0
+ int i = 0;
+ for(auto x : mapCP[s]){
+ i += 1 + desCendants(x);
+ }
+ return i;
+}
+int geNeration(string s){ // hàm đệ quy để tính thế hệ cao nhất của một 
+người
+ if(mapCP.count(s) == 0) return 0; // // kiểm tra xem người có trong 
+mapCP không, nếu không thì trả về 0
+ int i = 1;
+ int j = i;
+ for(auto x : mapCP[s]){
+ i = max(i, j + geNeration(x)); // thế hệ cao nhất trong tất cả con cái 
+và cộng thêm 1
+ }
+ return i;
+}
+int main()
+{
+ string s;
+ getline(cin, s);
+ while(s.compare("***") != 0){
+ int i = s.find(" ");
+ string ss = s.substr(i + 1, s.size() - i - 1);
+ if(mapCP.count(ss) == 0){
+ vector<string> a = {s.substr(0, i)};
+ mapCP[ss] = a;
+ }else{
+ mapCP[ss].push_back(s.substr(0, i));
+ }
+ getline(cin, s);
+ }
+ getline(cin, s);
+ while(s.compare("***") != 0){
+ if(int d = s.find("descendants") != -1){ // kiểm tra nếu là descendants 
+chương trình tìm số lượng hậu duệ của người được xác định và in ra kết 
+quả
+ int i = s.find(" ");
+ string ss = s.substr(i + 1, s.size() - i -1);
+ cout << desCendants(ss) << '\n';
+ }
+ if(int d = s.find("generation") != -1){ // kiểm tra nếu là generation 
+chương trình tìm thế hệ cao nhất của người được xác định và in ra kết quả
+ int i = s.find(" ");
+ string ss = s.substr(i + 1, s.size() - i -1);
+ cout << geNeration(ss) << '\n';
+ }
+ getline(cin, s);
+ }
+}

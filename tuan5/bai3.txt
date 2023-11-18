@@ -1,0 +1,43 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ int n86, m86, d, e;
+ scanf("%d %d", &n86, &m86); // Nhập số nút và số cạnh
+ vector<set<int>> v(n86 + 1); // Khởi tạo danh sách kề
+ vector<bool> checkN(n86 + 1, true); // Mảng đánh dấu các nút
+ // Nhập thông tin về các cạnh và xây dựng danh sách kề cho đồ thị vô 
+hướng
+ for (int i = 0; i < m86; i++) {
+ scanf("%d %d", &d, &e);
+ v[d].insert(e); // Thêm cạnh (d, e)
+ v[e].insert(d); // Thêm cạnh (e, d) - đồ thị vô hướng
+ }
+ e = 1; // Biến đếm số nút đã duyệt
+ queue<int> s; // Khởi tạo hàng đợi (queue)
+ s.push(1); // Bắt đầu từ nút 1
+ checkN[1] = false; // Đánh dấu nút 1 đã được duyệt
+ while (!s.empty()) {
+ d = s.front(); // Lấy phần tử đầu tiên trong hàng đợi
+ printf("%d ", d); // In ra nút hiện tại
+ s.pop(); // Loại bỏ nút hiện tại khỏi hàng đợi
+ // Duyệt qua các nút kề với nút hiện tại
+ for (auto x : v[d]) {
+ if (checkN[x]) {
+ checkN[x] = false; // Đánh dấu nút đã duyệt qua
+ s.push(x); // Thêm nút vào hàng đợi
+ e++; // Tăng biến đếm số nút đã duyệt
+ }
+ }
+ if (e < n86 && s.empty()) { // Nếu số nút đã duyệt chưa đủ và hàng 
+đợi rỗng
+ for (int i = 1; i <= n86; i++) { // Tìm nút chưa được duyệt
+ if (checkN[i]) {
+ checkN[i] = false; // Đánh dấu nút đã duyệt
+ s.push(i); // Thêm nút vào hàng đợi
+ break;
+ }
+ }
+ }
+ }
+}

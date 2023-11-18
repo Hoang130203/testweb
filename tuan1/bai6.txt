@@ -1,0 +1,13 @@
+//C/C++
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ int n86; //khai báo biến
+ cin >> n86; // nhập
+ for (int i = 1; i <= n86; i++) { // vòng lặp for chạy i đến khi nhỏ hơn 
+hoặc bằng n86
+ cout << i << " " << i * i << endl; //xuất
+ }
+ return 0;
+}

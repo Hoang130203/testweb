@@ -1,0 +1,83 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int mang_86[9][9]; // Khai báo mảng hai chiều mang_86
+int dem_86=0;
+bool checkrow_86(int row_86,int i_86) { // Hàm checkrow_86 kiểm tra 
+hàng row_86 có chứa số i_86 không
+for (int k = 0; k < 9; k++) {
+if (mang_86[row_86][k] == i_86) { // kiểm tra phần tử thứ k 
+của hàng row_86 bằng i_86 không
+return false;
+}
+}
+return true;
+}
+bool checkcol_86(int col_86,int i_86){ // Hàm checkcol_86 kiểm tra cột 
+col_86 có chứa số i_86 hay không
+for (int k = 0; k < 9; k++) { // Duyệt qua từng phần tử của cột
+if (mang_86[k][col_86] == i_86) { // kiểm tra phần tử thứ k 
+của cột col_86 bằng i_86 không
+return false;
+}
+}
+return true;
+}
+bool check3x3_86(int col, int row, int i) { // Hàm check3x3 kiểm tra ô 
+vuông 3x3 chứa ô (row, col) có chứa số i hay không
+int startrow = 3 * (row / 3);
+int startcol = 3 * (col / 3);
+for (int k = startrow; k < startrow + 3; k++) {
+for (int h = startcol; h < startcol + 3; h++) {
+if (mang_86[k][h] == i) { // kiểm tra phần tử tại vị trí (k, 
+h) bằng i hay không
+return false;
+}
+}
+}
+return true;
+}
+void total_86(int r,int c) { //đếm xem có bao nhiêu kết quả thỏa mãn
+if (r == 8 && c == 8) { //kiểm tra xem có phải phần từ cuối bảng
+for (int i = 1; i <= 9; i++) {
+if (check3x3_86(c, r, i) && checkcol_86(c, i) && 
+checkrow_86(r, i)) {
+dem_86++;
+}
+}
+return;
+}
+if (mang_86[r][c] == 0) {
+for (int i = 1; i <= 9; i++) {
+if (check3x3_86(c,r, i) && checkcol_86(c, i) && 
+checkrow_86(r,i)) {
+mang_86[r][c] = i;
+if (c == 8) {
+total_86(r + 1, 0);
+}
+else {
+total_86(r, c + 1);
+}
+mang_86[r][c] = 0;
+}
+}
+}
+else {
+if (c == 8) {
+total_86(r + 1, 0);
+}
+else {
+total_86(r, c + 1);
+}
+}
+}
+int main() {
+for (int i = 0; i < 9; i++) {
+for (int j = 0; j < 9; j++) {
+cin >> mang_86[i][j];//nhập ma trận ban đầu
+}
+}
+total_86(0, 0);// đếm xem có bao nhiều trường hợp
+cout << dem_86;// in ra kết quả
+return 0;
+}

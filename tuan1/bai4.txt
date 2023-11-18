@@ -1,0 +1,22 @@
+//Vu Minh Hoang - 20215386
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+ string TEXT_86;
+ string result = ""; //khai báo biến để lưu trữ kết quả sau khi đổi
+ // Đọc và xử lý từng dòng của đầu vào
+ while (getline(cin, TEXT_86)) {
+ for (int i = 0; i < TEXT_86.length(); i++) { // sử dụng vòng lặp for 
+để dò từng chữ của TEXT_86
+ if (TEXT_86[i] >= 'a' && TEXT_86[i] <= 'z') { // sử dụng lệnh if 
+để tìm chữ cái thường
+ TEXT_86[i] = TEXT_86[i] - 'a' + 'A'; // Chuyển đổi thành chữ
+hoa
+ }
+ }
+ result += TEXT_86 + "\n"; // Thêm dấu xuống dòng vào kết quả
+ }
+ cout << result;
+ return 0;
+}

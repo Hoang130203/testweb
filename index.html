@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chọn đường dẫn và tên file</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <h1 id="tieu-de"> Báo cáo tuần 1-8 môn project 1 </h1>
+   
+    <div>
+        <p id="name">Vũ Minh Hoàng - 20215386</p>
+    </div>
+    <label class="lua-chon" for="folderSelect">Chọn tuần: </label>
+    <select id="folderSelect" onchange="updateFileOptions()">
+        <option value="tuan1">Tuần 1</option>
+        <option value="tuan2">Tuần 2</option>
+        <option value="tuan3">Tuần 3</option>
+        <option value="tuan4">Tuần 4</option>
+        <option value="tuan5">Tuần 5</option>
+        <option value="tuan6">Tuần 6</option>
+        <option value="tuan7">Tuần 7</option>
+        <option value="tuan8">Tuần 8</option>
+    </select> <br>
+    
+    <div> 
+        <h1> </h1>    
+    </div>
+
+    <label class="lua-chon" for="fileSelect">Chọn bài: </label>
+    <select id="fileSelect"></select> <br>
+
+    <div> 
+        <h1> </h1>    
+    </div>
+    
+    <button id="xem" onclick="handleFileSubmit()">Xem</button>
+
+    <div> 
+        <h1> </h1>    
+    </div>
+
+    <div id="output"></div>
+
+    <div> 
+        <h1> </h1>    
+    </div>
+
+    <script>
+        function updateFileOptions() {
+            var folderSelect = document.getElementById("folderSelect");
+            var fileSelect = document.getElementById("fileSelect");
+            var selectedFolder = folderSelect.value;
+
+            // Clear existing options
+            fileSelect.innerHTML = "";
+
+            // Define options based on the selected folder
+            var options;
+            switch (selectedFolder) {
+                case "tuan1":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt", "bai4.txt", "bai5.txt", "bai6.txt", "bai7.txt", "bai8.txt", "bai9.txt", "bai10.txt", "bai11.txt", "bai12.txt", "bai13.txt", "bai14.txt"];
+                    break;
+                case "tuan2":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt", "bai4.txt", "bai5.txt", "bai6.txt", "bai7.txt"];
+                    break;
+                case "tuan3":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt", "bai4.txt", "bai5.txt", "bai6.txt", "bai7.txt", "bai8.txt", "bai9.txt"];
+                    break;
+                case "tuan4":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt", "bai4.txt"];
+                    break;
+                case "tuan5":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt", "bai4.txt"];
+                    break;
+                case "tuan6":
+                    options = ["bai1.txt", "bai2.txt", "bai3.txt"];
+                    break;
+                case "tuan7":
+                    options = ["bai1.txt", "bai2.txt"];
+                    break;
+                case "tuan8":
+                    options = ["bai1.txt", "bai2.txt"];
+                    break;
+                default:
+                    options = [];
+            }
+
+            // Populate the file select dropdown with options
+            options.forEach(function(option) {
+                var optionElement = document.createElement("option");
+                optionElement.value = option;
+                optionElement.text = option.replace(".txt", ""); // Display without the file extension
+                fileSelect.add(optionElement);
+            });
+        }
+
+        function handleFileSubmit() {
+            var folder = document.getElementById("folderSelect").value;
+            var file = document.getElementById("fileSelect").value;
+            var fullPath = folder + "/" + file;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("output").innerText = this.responseText;
+                }
+            };
+            xhttp.open("GET", fullPath, true);
+            xhttp.send();
+        }
+
+        // Initial update of file options when the page loads
+        updateFileOptions();
+    </script>
+</body>
+</html>

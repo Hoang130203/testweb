@@ -1,0 +1,25 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int a[21]; // khai báo mảng
+int n86;
+void in(){ // in ra dãy nhị phân hiện tại, in từng phần tử ra màn hình
+ for(int i=0;i<n86;i++){
+ cout<<a[i];
+ }
+ cout<<endl;
+}
+void Try(int i){ // thử tất cả phần tử thứ i trong dãy nhị phân
+ for(int k=0;k<=1;k++){ // giúp thử phần tử 0 và 1
+ a[i]=k; // gán
+ if(i==n86-1){ // kiểm tra xem đã đến phần tử cuối chưa
+ in(); // nếu đã đến phần tử cuối thì in ra
+ }
+ else Try(i+1); // chưa đến thì tiếp tục thử
+ }
+}
+int main(){
+ cin>>n86;
+ Try(0); // hàm này giúp tạo và liệt kê dãy nhị phân, bắt đầu từ phần tử
+0
+}

@@ -1,0 +1,15 @@
+//C/C++
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+ int a86, b86;
+ cin >> a86 >> b86;
+ int sum = a86 + b86;
+ int difference = a86 - b86;
+ int product = a86 * b86;
+ int quotient = a86 / b86;
+ cout << sum << " " << difference << " " << product << " " << quotient 
+<< endl;
+ return 0;
+}

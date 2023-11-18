@@ -1,0 +1,76 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+bool v[1001][1001]; // mảng sử dụng để theo dõi những vị trí đã được truy 
+cập trong quá trình tìm đường đi với kích thước 1001x1001
+int a, b, c, jj = INT_MAX; // khai báo biến a, b, c và biến jj để lưu trữ kết 
+quả tối thiểu
+void WJ(int x, int y, int j){ // hàm đệ quy tìm đường đi từ vị trí x, y với số
+bước j
+if(x == c || y == c){ // kiểm tra x hoặc y bằng c tức là đang ở đích
+if(jj > j) jj = j; // kiểm tra số bước j hiện tại nhỏ hơn jj hiện tại 
+thì cập nhật jj = j
+return;
+}
+if( x < a ){
+if(!v[a][y]){
+v[a][y] = true;
+WJ(a, y, j + 1);
+v[a][y] = false;
+}
+}
+if( y < b ){
+if(!v[x][b]) {
+v[x][b] = true;
+WJ(x, b, j + 1);
+v[x][b] = false;
+}
+}
+if(y < b && x + y < b){
+if(!v[0][x + y]) {
+v[0][x + y] = true;
+WJ(0, x + y, j + 1);
+v[0][x + y] = false;
+}
+}
+if(y < b && x + y >= b){
+if(!v[x + y - b][b]){
+v[x + y - b][b] = true;
+WJ(x + y - b, b, j + 1);
+v[x + y - b][b] = false;
+}
+}
+if(x < a && x + y < a){
+if(!v[x + y][0]){
+v[x + y][0] = true;
+WJ(x + y, 0, j + 1);
+v[x + y][0] = false;
+}
+}
+if(x < a && x + y >= a){
+if(!v[a][x + y - a]){
+v[a][x + y - a] = true;
+WJ(a, x + y - a, j + 1);
+v[a][x + y - a] = false;
+}
+}
+if(!v[0][y]){
+v[0][y] = true;
+WJ(0, y, j + 1);
+v[0][y] = false;
+}
+if(!v[x][0]){
+v[x][0] = true;
+WJ(x, 0, j + 1);
+v[x][0] = false;
+}
+}
+int main()
+{
+cin >> a >> b >> c; // nhập các giá trị
+WJ(0, 0, 0); // bắt đầu tìm đường đi từ điểm xuất phát 0;0
+if(jj != INT_MAX) cout << jj; // kiểm tra xem jj đã thay đổi từ
+int_max chưa, nếu có in ra giá trị tối thiểu
+else cout << "-1"; // nếu không in ra -1
+}

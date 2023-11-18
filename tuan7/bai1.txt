@@ -1,0 +1,101 @@
+//Vu Minh Hoang - 20215386
+// C++
+#include <bits/stdc++.h>
+using namespace std;
+long long total_money_transaction = 0; // Biến lưu tổng số tiền giao dịch
+unordered_map<string, int> m1; // unordered_map lưu trữ số tiền của mỗi tài khoản
+unordered_map<string, unordered_set<string>> m2; // unordered_map lưu trữ mối 
+quan hệ giữa các tài khoản
+unordered_set<string> ch; // unordered_set chứa tên các tài khoản đã xuất hiện
+vector<string> v2;// vector chứa tên tất cả các tài khoản
+int slB = 0, checkC = 0; // Biến đếm số lượng giao dịch và biến kiểm tra chu kỳ
+// Hàm kiểm tra chu kỳ giữa tài khoản sS và sE trong k bước di chuyển
+void cycle(string sS, string sE, int k, unordered_set<string> checkS){
+ if(k == 1){
+ if(m2[sS].count(sE) != 0 && checkS.count(sE) != 0){
+ checkC = 1; // Nếu có chu kỳ, gán biến kiểm tra checkC = 1
+ }
+ return;
+ }
+ if(checkS.count(sE) == 0) return; // Nếu tài khoản sE không xuất hiện, thoát
+ for(auto x : m2[sS]){
+ if(checkS.count(x) != 0){
+ checkS.erase(x);
+ cycle(x, sE, k - 1, checkS); // Gọi đệ quy để kiểm tra các bước tiếp theo
+ if(checkC == 1) return; // Nếu có chu kỳ, thoát
+ checkS.insert(x);
+ }
+ }
+}
+int main(){
+ // Tối ưu hóa input/output
+ std::ios_base::sync_with_stdio(false);
+ cin.tie(NULL);
+ cout.tie(NULL);
+ string s, ss;
+ int d;
+ cin >> s;
+ while(s != "#"){ // Xử lý thông tin đầu vào về giao dịch và cập nhật thông tin về
+các tài khoản
+ slB++;
+ cin >> ss >> d;
+ if(ch.count(s) == 0){ // Nếu tài khoản chưa xuất hiện
+ ch.insert(s);
+ m1[s] = d;
+ v2.push_back(s);
+ m2[s].insert(ss);
+ if(ch.count(ss) == 0){
+ ch.insert(ss);
+ v2.push_back(ss);
+ }
+ }else{ // Nếu tài khoản đã xuất hiện
+ m1[s] += d;
+ m2[s].insert(ss);
+ if(ch.count(ss) == 0){
+ ch.insert(ss);
+ v2.push_back(ss);
+ }
+ }
+ cin >> s >> ss;
+ cin >> s;
+ total_money_transaction += d;
+ }
+ cin >> s;
+ while(s != "#"){ // Xử lý các truy vấn đầu vào và đầu ra tương ứng
+ if(s == "?number_transactions"){
+ cout << slB << "\n";
+ cin >> s;
+ continue;
+ }
+ if(s == "?total_money_transaction"){
+ cout << total_money_transaction << '\n';
+ cin >> s;
+ continue;
+ }
+ if(s == "?list_sorted_accounts"){ // Sắp xếp danh sách tên tài khoản theo thứ tự
+tăng dần và in ra
+ sort(v2.begin(), v2.end(), [](string &a, string &b){
+ return a.compare(b) < 0;
+ });
+ for(auto x : v2) cout << x << " ";
+ cin >> s;
+ cout << "\n";
+ continue;
+ }
+ if(s == "?total_money_transaction_from"){ // In ra số tiền giao dịch từ một tài 
+khoản cụ thể đến tất cả các tài khoản khác
+ cin >> s;
+ cout << m1[s] << '\n';
+ cin >> s;
+ continue;
+ }
+ else{
+ cin >> s;
+ cin >> d;
+ cycle(s, s, d, ch); // Gọi hàm kiểm tra chu kỳ
+ cout << checkC << "\n";
+ checkC = 0;
+ cin >> s;
+ }
+ }
+}

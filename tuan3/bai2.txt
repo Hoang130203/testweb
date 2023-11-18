@@ -1,0 +1,32 @@
+//Vu Minh Hoang - 20215386
+//C++
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+queue<int> q; // tạo một đối tượng kiểu hàng đợi (queue) chứa các 
+số nguyên
+string a; // tạo một chuỗi để lưu trữ dữ liệu đầu vào từ người dùng
+getline(cin, a); // đọc một dòng từ người dùng và lưu vào chuỗi a
+while(a.compare("#") != 0){ //tạo vòng lặp kiểm tra xem chuỗi a có 
+bằng # không
+if(a.compare("POP") == 0){ // kiểm tra nếu chuỗi a bằng 
+"POP" không
+if( q.empty() ) cout << "NULL" << '\n'; // nếu q rỗng thì 
+in ra NULL
+else{
+cout << q.front() << '\n'; // nếu không thì in ra phần 
+tử đầu của hàng đợi
+q.pop();
+}
+}else{
+int i = a.find(" "); // tìm vị trí dấu cách đầu tiên trong 
+chuỗi a
+string b = a.substr(i + 1); // tạo 1 chuỗi b từ sau dấu cách
+i = stoi(b); // chuyển đổi chuỗi b thành số nguyên và lưu 
+vào i
+q.push(i); // cho i vào hàng đợi
+}
+getline(cin, a); // tiếp tục đọc dữ liệu cho đến khi gặp #
+}
+}

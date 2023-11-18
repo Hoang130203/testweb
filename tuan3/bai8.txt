@@ -1,0 +1,54 @@
+//Vu Minh Hoang - 20215386
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+using namespace std;
+int main() {
+ int n_86; // khai báo biến n_86 để lưu số lượng phần tử trong dãy
+ cin >> n_86;
+ vector<int> sequence_86; // khai báo vector sequence_86 để lưu dãy số
+ // đọc n_86 số nguyên từ input và lưu vào vector sequence_86
+ for (int i_86 = 0; i_86 < n_86; i_86++) {
+ int ai_86;
+ cin >> ai_86;
+ sequence_86.push_back(ai_86);
+ }
+ cin.ignore(); // Đọc và bỏ qua dấu xuống dòng sau số nguyên
+ string action_86;
+ while (getline(cin, action_86)) {
+ if (action_86 == "#") {
+ break; // Thoát khỏi vòng lặp nếu gặp ký tự #
+ }
+ else if (action_86 == "PRINT") {
+ // In ra dãy số trong vector sequence_86
+ for (int i_86 = 0; i_86 < sequence_86.size(); i_86++) {
+ cout << sequence_86[i_86];
+ if (i_86 < sequence_86.size()) {
+ cout << " "; // In khoảng trắng sau mỗi số
+ }
+ }
+ cout << endl; // In dấu xuống dòng
+ }
+ else {
+ istringstream iss_86(action_86);// phân tích lệnh
+ string cmd_86;// tên lệnh
+ iss_86 >> cmd_86;
+ if (cmd_86 == "ADD") {
+ int v_86;
+ iss_86 >> v_86;// tham số của lệnh
+ int middle_86 = sequence_86.size() / 2;
+ // chèn giá trị v_86 vào vị trí giữa của dãy số
+ if (sequence_86.size() % 2 == 0) {
+ sequence_86.insert(sequence_86.begin() + middle_86, 
+v_86);
+ }
+ else {
+ sequence_86.insert(sequence_86.begin() + middle_86 + 1, 
+v_86);
+ }
+ }
+ }
+ }
+ return 0;
+}

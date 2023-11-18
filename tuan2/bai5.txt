@@ -1,0 +1,18 @@
+//Vu Minh Hoang - 20215386
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+int n86; cin>>n86;
+int a[n86+1]; // tạo mảng
+for(int i=1;i<=n86;i++){ // khởi tạo mảng a sao cho phần tử của a có 
+giá trị từ 1 đến n86
+a[i]=i;
+}
+do{
+for(int i=1;i<=n86;i++)
+cout<<a[i]<<" ";
+cout<<endl;
+}
+while(next_permutation(a+1, a+n86+1)); // sử dụng 
+next_permutation để tạo ra hoán vị tiếp theo của mảng a
+}
